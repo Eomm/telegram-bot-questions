@@ -1,0 +1,19 @@
+{
+  "scripts": {
+    "start": "platformatic start --allow-env=DATABASE_URL,PORT,TELEGRAM_BOT_TOKEN",
+    "test": "node --test test/*/*.test.js",
+    "migrate": "platformatic db migrations apply"
+  },
+  "devDependencies": {
+    "fastify": "^4.23.2",
+    "standard": "^17.1.0"
+  },
+  "dependencies": {
+    "@eomm/fastify-telegram": "^1.0.0",
+    "@platformatic/db": "^1.2.0",
+    "platformatic": "^1.2.0"
+  },
+  "engines": {
+    "node": "^18.8.0 || >=20.6.0"
+  }
+}
