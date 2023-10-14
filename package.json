@@ -1,6 +1,9 @@
 {
+  "name": "telegram-bot-questions",
+  "description": "A telegram bot to run async stand up meetings",
+  "author": "Manuel Spigolon <behemoth89@gmail.com> (https://github.com/Eomm)",
   "scripts": {
-    "start": "platformatic start --allow-env=DATABASE_URL,PORT,TELEGRAM_BOT_TOKEN",
+    "start": "platformatic start",
     "test": "node --test test/*/*.test.js",
     "migrate": "platformatic db migrations apply"
   },
@@ -11,8 +14,23 @@
   "dependencies": {
     "@eomm/fastify-telegram": "^1.0.0",
     "@platformatic/db": "^1.2.0",
+    "google-auth-library": "^8.9.0",
+    "google-spreadsheet": "^4.1.0",
     "platformatic": "^1.2.0"
   },
+  "funding": "https://github.com/Eomm/telegram-bot-questions?sponsor=1",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Eomm/telegram-bot-questions/issues"
+  },
+  "homepage": "https://github.com/Eomm/telegram-bot-questions#readme",
+  "keywords": [
+    "telegram",
+    "bot",
+    "telegram-bot",
+    "fastify",
+    "platformatic"
+  ],
   "engines": {
     "node": "^18.8.0 || >=20.6.0"
   }

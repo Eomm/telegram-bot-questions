@@ -5,6 +5,8 @@
 - Create a new project folder
 - Create an empty `.env` file
 
+- Install gcloud https://cloud.google.com/sdk/docs/install-sdk
+
 ## Step 1: Get the Telegram Bot API Token
 
 - Start a chat with [@BotFather](https://t.me/BotFather)
