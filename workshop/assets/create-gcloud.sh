@@ -1,11 +1,17 @@
 echo "🔥 Creating GCP project and service account"
 
+# -----------------------------
+# ---- CHANGE THESE VALUES ----
 export GCP_PROJECT_ID=telegram-bot-questions
 export GCP_SERVICE_USER=telegram-bot-service-account
-export GCP_MEMBER="${GCP_SERVICE_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
+# ---- END CHANGE THESE VALUES ----
+# ---------------------------------
 
+# ---- DO NOT CHANGE THESE VALUES: ----
+
+export GCP_MEMBER="${GCP_SERVICE_USER}@${GCP_PROJECT_ID}.iam.gserviceaccount.com"
 OUTPUT_FILE=credentials.json
-ENV_FILE=../.env
+ENV_FILE=./.env
 
 echo "💡 GCP_PROJECT_ID: $GCP_PROJECT_ID"
 echo "💡 GCP_SERVICE_USER: $GCP_SERVICE_USER"

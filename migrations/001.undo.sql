@@ -1,3 +1,4 @@
-
--- Add SQL in this file to drop the database tables 
-DROP TABLE movies;
+DROP TABLE IF EXISTS user_retros;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS retros;
+DROP TYPE IF EXISTS user_role;
