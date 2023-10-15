@@ -36,5 +36,10 @@
   },
   "types": {
     "autogenerate": true
+  },
+  "authorization": {
+    "jwt": {
+      "secret": "{PLT_JWT_SECRET}"
+    }
   }
 }

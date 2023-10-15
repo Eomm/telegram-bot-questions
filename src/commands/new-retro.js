@@ -147,12 +147,25 @@ module.exports = function build (app, bot) {
         })
 
         await app.platformatic.entities.userRetro.insert({ tx, inputs: [{ userId: user.id, retroId: result.id }] })
+
+        // Prepare the Google Sheet
+        const doc = await app.getSpreadsheet(retroItem.googleSheetId)
+        await app.getQuestionsSheet(doc, [
+          'Date',
+          'User',
+          ...retroItem.questions.list
+        ])
       })
 
       await ctx.reply('✅ Done!')
     } catch (error) {
       if (error.code === '23505') {
         return ctx.reply('The code is already in use, please choose another one')
+      }
+
+      if (error.response?.status === 403) {
+        app.log.warn(error)
+        return ctx.reply(`Please share the spreadsheet with the bot email (${app.serviceAccountEmail}) and retry to sent the code`)
       }
 
       throw error

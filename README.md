@@ -57,13 +57,15 @@ All the requirements are free and every participant must have:
 
 - [Node.js 20.x](https://nodejs.org/it/download) installed
 - A PostgreSQL installation. You may use `docker pull postgres:15-alpine`
+- A GitHub account
 - A Telegram account
-- A [Google Cloud](https://cloud.google.com/) account
+- A [Google Cloud](https://cloud.google.com/) account with [`gcloud` CLI](https://cloud.google.com/sdk/docs/install-sdk) installed
 - A [Platformatic Cloud](https://platformatic.cloud/) account
 - A [Neon](https://neon.tech/) account
 
 More details will be provided before the workshop and will be listed here.
 
+- [Workshop instructions](./workshop/README.md)
 
 ## License
 

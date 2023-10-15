@@ -35,6 +35,7 @@ module.exports = async function googleSheet (app, opts) {
     try {
       await sheet.loadHeaderRow(1)
     } catch (error) {
+      app.log.debug(error, 'Error loading header row for sheet %s', sheet.title)
       await sheet.setHeaderRow(columns, 1)
     }
 

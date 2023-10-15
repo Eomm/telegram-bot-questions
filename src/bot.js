@@ -2,8 +2,10 @@
 
 const safeMarkdown = require('telegraf-safe-md-reply')
 
-const registerCreateRetro = require('./commands/new-retro')
+const registerSart = require('./commands/start')
+const registerNewRetro = require('./commands/new-retro')
 const registerJoinRetro = require('./commands/join-retro')
+const registerAnswerRetro = require('./commands/run-retro')
 
 /**
  * @param {import('fastify').FastifyInstance} app
@@ -14,33 +16,10 @@ module.exports = function build (app, bot) {
   bot.use(upsertUser) // add user to ctx
   bot.use(safeMarkdown()) // add markdown support to ctx.reply
 
-  registerCreateRetro(app, bot)
+  registerSart(app, bot)
+  registerNewRetro(app, bot)
   registerJoinRetro(app, bot)
-
-  bot.on('text', async (ctx) => {
-    await ctx.reply('Hello World!!!!')
-
-    try {
-      const doc = await app.getSpreadsheet('15wylDyvCesqzoko3_-PGqgm22VaT7-0F58jv520-oNQ')
-      const sheet = await app.getQuestionsSheet(doc, ['id', 'username', 'text'])
-
-      await sheet.addRow([
-        ctx.message.from.id,
-        ctx.message.from.username,
-        ctx.message.text
-      ], { insert: true })
-
-      await ctx.reply('Done')
-    } catch (error) {
-      if (error.response?.status === 403) {
-        app.log.warn(error)
-        await ctx.reply('Please share the spreadsheet with the bot email: ' + app.serviceAccountEmail)
-      } else {
-        app.log.error(error)
-        await ctx.reply('Ooops, something went wrong')
-      }
-    }
-  })
+  registerAnswerRetro(app, bot)
 
   async function upsertUser (ctx, next) {
     const userId = ctx.update.message?.from.id || ctx.update.callback_query?.from.id

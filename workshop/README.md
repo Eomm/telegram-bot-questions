@@ -1,11 +1,12 @@
+# Telegram Bot Workshop
 
-## Step 0
+In this workshop, you will learn to create a Telegram bot integrated with Google and deployed on Platformatic.
 
-- Check the requirements
-- Create a new project folder
-- Create an empty `.env` file
+## Step 0: Check the requirements
 
-- Install gcloud https://cloud.google.com/sdk/docs/install-sdk
+- Check the requirements listed in the [README.md](../README.md) file
+
+---
 
 ## Step 1: Generate the Platformatic scaffolding
 
@@ -27,6 +28,8 @@
 
 👍 It should be running on http://localhost:3042
 
+---
+
 ## Step 2: Integrate with Telegram
 
 - Start a chat with [@BotFather](https://t.me/BotFather)
@@ -47,6 +50,8 @@ app.bot.on('text', async (ctx) => {
 ```
 
 👍 Send a message to your bot and it should reply with `Hello World!`
+
+---
 
 ## Step 3: Integrate with Google Sheets
 
