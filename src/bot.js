@@ -3,6 +3,7 @@
 const safeMarkdown = require('telegraf-safe-md-reply')
 
 const registerCreateRetro = require('./commands/new-retro')
+const registerJoinRetro = require('./commands/join-retro')
 
 /**
  * @param {import('fastify').FastifyInstance} app
@@ -14,6 +15,7 @@ module.exports = function build (app, bot) {
   bot.use(safeMarkdown()) // add markdown support to ctx.reply
 
   registerCreateRetro(app, bot)
+  registerJoinRetro(app, bot)
 
   bot.on('text', async (ctx) => {
     await ctx.reply('Hello World!!!!')
