@@ -16,7 +16,7 @@ const NEW_RETRO_STEPS = [
     step: 'new_retro_gsheet',
     field: 'google_sheet_id',
     message: (app, ctx) => {
-      return 'What is the Google Sheet the bot should update? Remember to share the sheet with the bot email: ' + ctx.escapeMarkdown(app.serviceAccountEmail)
+      return `Provide the link to the Google Sheet that I should update\\.\nAdd the bot email: \`${ctx.escapeMarkdown(app.serviceAccountEmail)}\` as editor`
     },
     validate: (value) => {
       const id = getGoogleSheetId(value)
