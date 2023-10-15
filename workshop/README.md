@@ -6,7 +6,6 @@ In this workshop, you will learn to create a Telegram bot integrated with Google
 
 - Check the requirements listed in the [README.md](../README.md) file
 
----
 
 ## Step 1: Generate the Platformatic scaffolding
 
@@ -28,7 +27,6 @@ In this workshop, you will learn to create a Telegram bot integrated with Google
 
 👍 It should be running on http://localhost:3042
 
----
 
 ## Step 2: Integrate with Telegram
 
@@ -51,7 +49,6 @@ app.bot.on('text', async (ctx) => {
 
 👍 Send a message to your bot and it should reply with `Hello World!`
 
----
 
 ## Step 3: Integrate with Google Sheets
 
@@ -102,7 +99,6 @@ app.bot.on('text', async (ctx) => {
 
 👍 It should update the spreadsheet with the message
 
----
 
 ## Step 4: Implement the bot logic
 
@@ -116,24 +112,17 @@ app.bot.on('text', async (ctx) => {
 
 👍 The bot should reply to your commands
 
----
 
 ## Step 5: Deploy to Platformatic Cloud
 
 - Create a new NEON database
-- Create a new Platformatic Cloud project
+- Create a new Platformatic Cloud project manually
 - Create a GitHub repository
 - Configure the GitHub repository secrets
+  - The `PLT_BASE_URL` can be set after the first deployment
 - Push the code to GitHub!
 
-```
-git init
-git remote add origin your-git-url
-git fetch
-git reset --mixed origin/master
-```
-
-```
+```sh
 npm i -g neonctl
 neonctl auth
 neonctl db create --name retro
@@ -141,9 +130,24 @@ neonctl db list
 echo "DATABASE_URL=$(neonctl connection-string --database-name retro --pooled)" >> .env
 ```
 
+```sh
+git init
+git remote add origin your-git-url
+git fetch
+git reset --mixed origin/master
+```
+
 👍 The bot should work without starting it locally
 ❗️ Now the bot token is used by the deployed application, so if you start it locally it will disconnect the deployed one!
 
-[gcloud-cred]: http://todo.it/sh-file
-[google-sheet-plugin]: http://todo.it/source
-[bot-logic]: http://todo.it/slides
+
+Congratulations! 🎉
+You have created a Telegram bot integrated with Google Sheets and deployed on Platformatic Cloud!
+
+There is a lot of room for improvements, so feel free to play with it and make it yours!
+If you have any questions, you can reach me on [Twitter](https://twitter.com/ManuEomm).
+If you want to learn more about Fastify, I wrote a [book](https://backend.cafe/the-fastify-book-is-out) about it!
+
+[gcloud-cred]: https://github.com/Eomm/telegram-bot-questions/blob/main/workshop/assets/create-gcloud.sh
+[google-sheet-plugin]: https://github.com/Eomm/telegram-bot-questions/blob/main/plugins/google-sheet.js
+[bot-logic]: https://docs.google.com/presentation/d/1y7O66cr0ddtmU3JOTCtd96t4pZFHxL3KjCmfk8kiziw/edit?usp=sharing

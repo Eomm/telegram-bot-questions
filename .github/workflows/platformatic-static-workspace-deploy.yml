@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - main
-      - wip
     paths-ignore:
       - 'docs/**'
       - '**.md'
@@ -20,7 +19,7 @@ jobs:
      PLT_SERVER_HOSTNAME: 127.0.0.1 
      PLT_TELEGRAM_BOT_TOKEN: ${{ secrets.PLT_TELEGRAM_BOT_TOKEN }}
      PLT_JWT_SECRET: ${{ secrets.PLT_JWT_SECRET }}
-     PLT_BASE_URL: ${{ secrets.PLT_BASE_URL || ''}}
+     PLT_BASE_URL: ${{ secrets.PLT_BASE_URL || '' }}
      PLT_GCP_CREDENTIALS: ${{ secrets.PLT_GCP_CREDENTIALS }}
 
     steps:
