@@ -19,6 +19,7 @@
     "@eomm/fastify-telegram": "^1.1.0",
     "@platformatic/db": "^1.2.0",
     "cron-parser": "^4.9.0",
+    "fastify-cron": "^1.3.1",
     "google-auth-library": "^8.9.0",
     "google-spreadsheet": "^4.1.0",
     "platformatic": "^1.2.0",

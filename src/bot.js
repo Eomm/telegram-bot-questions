@@ -11,7 +11,7 @@ const registerAnswerRetro = require('./commands/run-retro')
  * @param {import('fastify').FastifyInstance} app
  * @param {import('telegraf').Telegraf} bot
  */
-module.exports = function build (app, bot) {
+module.exports = async function build (app, bot) {
   // Middleware to manage the user session
   bot.use(upsertUser) // add user to ctx
   bot.use(safeMarkdown()) // add markdown support to ctx.reply
@@ -20,6 +20,17 @@ module.exports = function build (app, bot) {
   registerNewRetro(app, bot)
   registerJoinRetro(app, bot)
   registerAnswerRetro(app, bot)
+
+  app.addHook('onListen', async function hook () {
+    const allRetros = await app.platformatic.entities.retro.find({
+      fields: ['id', 'code', 'cron']
+    })
+
+    for (const retro of allRetros) {
+      app.startRetroCronJob(retro)
+    }
+    app.log.info('Created %d cron jobs on start', allRetros.length)
+  })
 
   async function upsertUser (ctx, next) {
     const userId = ctx.update.message?.from.id || ctx.update.callback_query?.from.id

@@ -132,7 +132,7 @@ module.exports = function build (app, bot) {
       await app.platformatic.db.tx(async tx => {
         const [result] = await app.platformatic.entities.retro.insert({
           tx,
-          fields: ['id'],
+          fields: ['id', 'code', 'cron', 'googleSheetId', 'questions'],
           inputs: [retroItem]
         })
 
@@ -149,12 +149,14 @@ module.exports = function build (app, bot) {
         await app.platformatic.entities.userRetro.insert({ tx, inputs: [{ userId: user.id, retroId: result.id }] })
 
         // Prepare the Google Sheet
-        const doc = await app.getSpreadsheet(retroItem.googleSheetId)
+        const doc = await app.getSpreadsheet(result.googleSheetId)
         await app.getQuestionsSheet(doc, [
           'Date',
           'User',
-          ...retroItem.questions.list
+          ...result.questions.list
         ])
+
+        app.startRetroCronJob(result)
       })
 
       await ctx.reply('✅ Done!')

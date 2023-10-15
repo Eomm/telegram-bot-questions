@@ -17,5 +17,5 @@ module.exports = async function telegramBotPlugin (app, opts) {
     }
   })
 
-  configureBot(app, app.bot)
+  await configureBot(app, app.bot)
 }
