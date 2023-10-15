@@ -104,7 +104,9 @@ app.bot.on('text', async (ctx) => {
 - Let's [analyze the requirements][bot-logic] together
 - Edit the `migrations/001.do.sql` file with the SQL schema
 - Delete the `db.sqlite` and `schema.lock` files
+- Start the PostgreSQL database
 - Let's implement the logic!
+- Install `npm i telegraf-safe-md-reply`
 - Start the application: `npm start`
 
 👍 The bot should reply to your commands

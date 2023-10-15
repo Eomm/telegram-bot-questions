@@ -56,6 +56,7 @@ Will you rescue us from retrospective anxiety?
 All the requirements are free and every participant must have:
 
 - [Node.js 20.x](https://nodejs.org/it/download) installed
+- A PostgreSQL installation. You may use `docker pull postgres:15-alpine`
 - A Telegram account
 - A [Google Cloud](https://cloud.google.com/) account
 - A [Platformatic Cloud](https://platformatic.cloud/) account

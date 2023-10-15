@@ -10,8 +10,10 @@ module.exports = async function telegramBotPlugin (app, opts) {
     botToken: app.platformatic.configManager.env.PLT_TELEGRAM_BOT_TOKEN,
     baseUrl: app.platformatic.configManager.env.PLT_BASE_URL,
     decoratorBotName: 'bot',
-    onUnhandledError: (err, ctx) => {
-      app.log.error(`Ooops, encountered an error for ${ctx.updateType}`, err)
+    waitForHealthPolling: 2_000,
+    onUnhandledError: async (err, ctx) => {
+      app.log.error(err, `Ooops, encountered an error for "${ctx.updateType}"`)
+      await ctx.reply('🙈 Ooops, something went wrong')
     }
   })
 

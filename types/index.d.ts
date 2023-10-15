@@ -1,7 +1,11 @@
-import { Movie } from './Movie'
+import { Retro } from './Retro'
+import { User } from './User'
+import { UserRetro } from './UserRetro'
   
 interface EntityTypes  {
-  Movie: Movie
+  Retro: Retro
+    User: User
+    UserRetro: UserRetro
 }
   
-export { EntityTypes, Movie }
+export { EntityTypes, Retro, User, UserRetro }

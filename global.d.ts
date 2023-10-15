@@ -1,9 +1,9 @@
 import type { PlatformaticApp, PlatformaticDBMixin, PlatformaticDBConfig, Entity, Entities, EntityHooks } from '@platformatic/db'
-import { EntityTypes, Movie } from './types'
+import { EntityTypes, Retro,User,UserRetro } from './types'
 
 declare module 'fastify' {
   interface FastifyInstance {
-    getSchema<T extends 'Movie'>(schemaId: T): {
+    getSchema<T extends 'Retro' | 'User' | 'UserRetro'>(schemaId: T): {
       '$id': string,
       title: string,
       description: string,
@@ -17,11 +17,15 @@ declare module 'fastify' {
 }
 
 interface AppEntities extends Entities {
-  movie: Entity<Movie>,
+  retro: Entity<Retro>,
+    user: Entity<User>,
+    userRetro: Entity<UserRetro>,
 }
 
 interface AppEntityHooks {
-  addEntityHooks(entityName: 'movie', hooks: EntityHooks<Movie>): any
+  addEntityHooks(entityName: 'retro', hooks: EntityHooks<Retro>): any
+    addEntityHooks(entityName: 'user', hooks: EntityHooks<User>): any
+    addEntityHooks(entityName: 'userRetro', hooks: EntityHooks<UserRetro>): any
 }
 
 declare module 'fastify' {

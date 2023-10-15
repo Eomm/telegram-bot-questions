@@ -5,18 +5,24 @@
   "scripts": {
     "start": "platformatic start",
     "test": "node --test test/*/*.test.js",
-    "migrate": "platformatic db migrations apply"
+    "migrate": "platformatic db migrations apply",
+    "lint": "standard",
+    "lint:fix": "standard --fix",
+    "start:db": "./bin/start-db.sh",
+    "stop:db": "./bin/stop-db.sh"
   },
   "devDependencies": {
     "fastify": "^4.23.2",
     "standard": "^17.1.0"
   },
   "dependencies": {
-    "@eomm/fastify-telegram": "^1.0.0",
+    "@eomm/fastify-telegram": "^1.1.0",
     "@platformatic/db": "^1.2.0",
+    "cron-parser": "^4.9.0",
     "google-auth-library": "^8.9.0",
     "google-spreadsheet": "^4.1.0",
-    "platformatic": "^1.2.0"
+    "platformatic": "^1.2.0",
+    "telegraf-safe-md-reply": "^1.0.0"
   },
   "funding": "https://github.com/Eomm/telegram-bot-questions?sponsor=1",
   "license": "MIT",
