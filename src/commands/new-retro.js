@@ -1,69 +1,7 @@
 'use strict'
 
 const { message } = require('telegraf/filters')
-const cronParser = require('cron-parser')
-
-let stepId = 0
-const NEW_RETRO_STEPS = [
-  {
-    i: stepId++,
-    step: 'new_retro_name',
-    field: 'name',
-    message: 'What is the name of the retro?'
-  },
-  {
-    i: stepId++,
-    step: 'new_retro_gsheet',
-    field: 'google_sheet_id',
-    message: (app, ctx) => {
-      return `Provide the link to the Google Sheet that I should update\\.\nAdd the bot email: \`${ctx.escapeMarkdown(app.serviceAccountEmail)}\` as editor`
-    },
-    validate: (value) => {
-      const id = getGoogleSheetId(value)
-      return /^[a-zA-Z0-9-_]{44}$/i.test(id)
-    },
-    rewriteText: (value) => { return getGoogleSheetId(value) },
-    invalidMessage: 'Past a valid Google Sheet URL or ID'
-  },
-  {
-    i: stepId++,
-    step: 'new_retro_questions',
-    field: 'questions',
-    message: 'What are the questions for the retro? \\(every question must be prefixed by the \\# symbol\\)',
-    validate: (value) => {
-      const questions = value.split('#').map(line => line.trim()).filter(line => line.length > 0)
-      return questions.length > 0
-    },
-    rewriteText: (value) => {
-      const questions = value.split('#').map(line => line.trim()).filter(line => line.length > 0)
-      return { list: questions }
-    },
-    invalidMessage: 'Invalid question list'
-  },
-  {
-    i: stepId++,
-    step: 'new_retro_cron',
-    field: 'cron',
-    message: 'What is the cron expression for the retro? \\(ex `0 9 * * 1-5` for every weekday at 9:00 UTC\\)',
-    validate: (value) => {
-      try {
-        cronParser.parseExpression(value)
-        return true
-      } catch (error) {
-        return false
-      }
-    },
-    invalidMessage: 'Invalid cron expression'
-  },
-  {
-    i: stepId++,
-    step: 'new_retro_code',
-    field: 'code',
-    message: 'What is the code of the retro? \\(4\\-30 characters long and can only contain letters, numbers, dashes, underscores and dots\\)',
-    validate: (value) => /^[a-z0-9-_.]{4,30}$/i.test(value),
-    invalidMessage: 'The code is Invalid'
-  }
-]
+const { NEW_RETRO_STEPS } = require('./new-retro-flow')
 
 /**
  * @param {import('fastify').FastifyInstance} app
@@ -73,7 +11,7 @@ module.exports = function build (app, bot) {
   bot.command('newretro', async ctx => {
     const { user } = ctx
 
-    const initStep = NEW_RETRO_STEPS[0]
+    const initStep = NEW_RETRO_STEPS.new_retro_name
 
     await app.platformatic.entities.user.save({
       input: {
@@ -90,19 +28,19 @@ module.exports = function build (app, bot) {
   bot.on(message('text'), async (ctx, next) => {
     const user = ctx.user
 
-    const currentStep = NEW_RETRO_STEPS.find(step => step.step === user.currentAction)
+    const currentStep = NEW_RETRO_STEPS[user.currentAction]
     if (!currentStep || ctx.message.text.startsWith('/')) {
       // skip this middleware if user is not creating a new retro
       return next()
     }
 
-    const validationResult = currentStep.validate?.(ctx.message.text)
-    if (validationResult === false) {
+    const validationResult = currentStep.validate(ctx.message.text)
+    if (!validationResult.isValid) {
       app.log.debug('Invalid value: [%s]', ctx.message.text)
-      return ctx.reply(currentStep.invalidMessage || 'Invalid value')
+      return ctx.reply(validationResult.errorMessage || 'Invalid value')
     }
 
-    const nextStep = NEW_RETRO_STEPS[currentStep.i + 1]
+    const nextStep = currentStep.next
     if (nextStep) {
       // The process is not finished yet, ask for the next step
       await app.platformatic.entities.user.save({
@@ -111,7 +49,7 @@ module.exports = function build (app, bot) {
           currentAction: nextStep.step,
           currentActionData: {
             ...user.currentActionData,
-            [currentStep.field]: currentStep.rewriteText?.(ctx.message.text) || ctx.message.text
+            [currentStep.field]: validationResult.newValue || ctx.message.text
           },
           updatedAt: new Date()
         }
@@ -173,13 +111,4 @@ module.exports = function build (app, bot) {
       throw error
     }
   })
-}
-
-function getGoogleSheetId (value) {
-  if (typeof value === 'string' && value.length === 44) {
-    return value
-  } else if (value.length > 44) {
-    return value.split('/').find(part => part.length === 44)
-  }
-  return ''
 }
