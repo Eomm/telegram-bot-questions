@@ -5,7 +5,14 @@ In this workshop, you will learn to create a Telegram bot integrated with Google
 ## Step 0: Check the requirements
 
 - Check the requirements listed in the [README.md](../README.md) file
+- Run the `workshop/assets/self-checkup.sh` script to check the requirements:
 
+```sh
+curl -s -O https://raw.githubusercontent.com/Eomm/telegram-bot-questions/main/workshop/assets/self-checkup.sh
+chmod +x ./self-checkup.sh
+```
+
+- Try to fix the errors and ask for help if you need it!
 
 ## Step 1: Generate the Platformatic scaffolding
 
@@ -56,15 +63,21 @@ app.bot.on('text', async (ctx) => {
 ## Step 3: Integrate with Google Sheets
 
 - Download the [creation script][gcloud-cred]
+
+```sh
+curl -s -O https://raw.githubusercontent.com/Eomm/telegram-bot-questions/main/workshop/assets/create-gcloud.sh
+chmod +x ./create-gcloud.sh
+```
+
 - Edit the script variables
-- Run the script: `./create-gcloud.sh` (be sure it has execution permissions `chmod +x ./create-gcloud.sh`)
+- Run the script: `./create-gcloud.sh`
 
 ✅ It should configure a new Google Cloud project and create a new Service Account
 
 - Install: `npm i google-spreadsheet google-auth-library`
 - Create a new file `plugins/google-sheet.js`
 - Download the [plugin file][google-sheet-plugin] and let's analyze it together
-- Create an empty spreadsheet in Google Sheets
+- Create an empty Google Sheets spreadsheet in a personal Google Drive account
 - Edit the `plugins/telgram.js` file and add the following code:
 
 ```js
@@ -153,8 +166,8 @@ echo "DATABASE_URL=$(neonctl connection-string --database-name retro --pooled)" 
 git init
 git remote add origin <your-git-url>
 git fetch
-git reset --mixed origin/master
-git push --force origin master
+git reset --mixed origin/main
+git push --force origin main
 ```
 
 ✅ The bot should work without starting it locally
@@ -179,4 +192,4 @@ If you want to learn more about Fastify, I wrote a [book](https://backend.cafe/t
 
 [gcloud-cred]: https://github.com/Eomm/telegram-bot-questions/blob/main/workshop/assets/create-gcloud.sh
 [google-sheet-plugin]: https://github.com/Eomm/telegram-bot-questions/blob/main/plugins/google-sheet.js
-[bot-logic]: https://docs.google.com/presentation/d/1y7O66cr0ddtmU3JOTCtd96t4pZFHxL3KjCmfk8kiziw/edit?usp=sharing
+[bot-logic]: https://docs.google.com/presentation/d/1ViSd4t2PCC3PcZMzwaL1WuzgLUCmt071zo-vZA8U5gM/edit?usp=sharing
