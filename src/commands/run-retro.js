@@ -117,6 +117,7 @@ async function runRetro (app, retroCode) {
 
   try {
     await Promise.all(sendMessages)
+    return true
   } catch (error) {
     app.log.error(error, 'Error sending messages for retro %s', retro.id)
   }
