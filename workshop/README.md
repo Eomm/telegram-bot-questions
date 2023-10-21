@@ -109,9 +109,13 @@ app.bot.on('text', async (ctx) => {
 - Edit the `migrations/001.do.sql` file with the SQL schema
 - Delete the `db.sqlite` and `schema.lock` files
 - Start the PostgreSQL database
-- Let's implement the logic!
-- Install `npm i telegraf-safe-md-reply`
-- Start the application: `npm start`
+- Let's implement the logic! We will need:
+
+```sh
+npm i telegraf-safe-md-reply cron-parser fastify-cron
+```
+
+- Start the application: `npm start` and try it out!
 
 ✅ The bot should reply to your commands
 
