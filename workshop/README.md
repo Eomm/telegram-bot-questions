@@ -25,7 +25,7 @@ In this workshop, you will learn to create a Telegram bot integrated with Google
 - Move into the project: `cd ./my-telegram-bot`
 - Start the application: `npm start`
 
-👍 It should be running on http://localhost:3042
+✅ It should be running on http://localhost:3042
 
 
 ## Step 2: Integrate with Telegram
@@ -38,16 +38,19 @@ In this workshop, you will learn to create a Telegram bot integrated with Google
 - Install: `npm i @eomm/fastify-telegram`
 - Rename `plugins/example.js` to `plugins/telegram.js`
 - Configure the `@eomm/fastify-telegram`
-- Add the following code to the `plugins/telegram.js` file
-- Start the application: `npm start`
+- Add the following code to the `plugins/telegram.js` file:
 
 ```js
+// ...
 app.bot.on('text', async (ctx) => {
   await ctx.reply('Hello World!')
 })
+  // ...
 ```
 
-👍 Send a message to your bot and it should reply with `Hello World!`
+  - Start the application: `npm start`
+
+✅ Send a message to your bot and it should reply with `Hello World!`
 
 
 ## Step 3: Integrate with Google Sheets
@@ -56,7 +59,7 @@ app.bot.on('text', async (ctx) => {
 - Edit the script variables
 - Run the script: `./create-gcloud.sh` (be sure it has execution permissions `chmod +x ./create-gcloud.sh`)
 
-👍 It should configure a new Google Cloud project and create a new Service Account
+✅ It should configure a new Google Cloud project and create a new Service Account
 
 - Install: `npm i google-spreadsheet google-auth-library`
 - Create a new file `plugins/google-sheet.js`
@@ -92,12 +95,12 @@ app.bot.on('text', async (ctx) => {
 - Start the application: `npm start`
 - Send a message to your bot
 
-👎 It should reply with an error
+❌ It should reply with an error
 
 - Open the spreadsheet and share it with the Service Account email
 - Send a message to your bot
 
-👍 It should update the spreadsheet with the message
+✅ It should update the spreadsheet with the message
 
 
 ## Step 4: Implement the bot logic
@@ -110,10 +113,22 @@ app.bot.on('text', async (ctx) => {
 - Install `npm i telegraf-safe-md-reply`
 - Start the application: `npm start`
 
-👍 The bot should reply to your commands
+✅ The bot should reply to your commands
 
 
-## Step 5: Deploy to Platformatic Cloud
+## Step 5: Admin commands
+
+- Implement a route to control the bot
+- Enable authentication with JWT:
+  - Edit the `platformatic.db.json > authorization`
+  - Add the `PLT_JWT_SECRET` env variable
+- Try it out with CURL and https://jwt.io/:
+
+```sh
+curl -X POST http://localhost:3001/execute/retro/<retro code> -H "Content-Type: application/json" -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwiaWQiOiIyODMxMjU3MCJ9.ipd_7lVrLVG0By-sksQK8LUoYXzIaQvoWBE1rOuWCLw" -d '{}'
+```
+
+## Step 6: Deploy to Platformatic Cloud
 
 - Create a new NEON database
 - Create a new Platformatic Cloud project manually
@@ -132,14 +147,24 @@ echo "DATABASE_URL=$(neonctl connection-string --database-name retro --pooled)" 
 
 ```sh
 git init
-git remote add origin your-git-url
+git remote add origin <your-git-url>
 git fetch
 git reset --mixed origin/master
+git push --force origin master
 ```
 
-👍 The bot should work without starting it locally
+✅ The bot should work without starting it locally
 ❗️ Now the bot token is used by the deployed application, so if you start it locally it will disconnect the deployed one!
 
+
+# Pitfalls
+
+- The scheduled job within the source code is a bit tricky, prefer an external service
+- The user can run a single retro at a time, but it can be improved
+- Add all the features you want!
+
+
+# Summary
 
 Congratulations! 🎉
 You have created a Telegram bot integrated with Google Sheets and deployed on Platformatic Cloud!
